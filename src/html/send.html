@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="javascript/jquery-3.4.1.min.js"></script>
+    <script src="javascript/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+
+<form id="form" class="form-inline border border-primary" >
+    <div class="form-group col-md-2">
+        <label>text </label>
+        <input name="text"/>
+    </div>
+    <div class="form-group col-md-2">
+        <label>Title </label>
+        <input name="title"/>
+    </div>
+    <div class="form-group col-md-2">
+        <label>tag </label>
+        <input name="tag"/>
+    </div>
+
+    <div class="form-group col-md-2">
+        <label>send </label>
+        <input onclick="post();" type="submit"/>
+    </div>
+
+
+</form>
+
+<script>
+
+    $("#form").submit(function(e) {
+        e.preventDefault();
+    });
+    function post() {
+        let data = JSON.stringify( $('#form').serializeArray())
+        $.post( `https://${new URL(window.location.href).host}/push`, data, 'application/json')
+    }
+
+
+</script>
+
+</body>
+</html>

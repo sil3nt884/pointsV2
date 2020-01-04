@@ -1,0 +1,18 @@
+[{
+  "Kitchen": "Jacob",
+   "Laundry":  "Chloe",
+    "Floor" : "Ricky"
+},
+
+  {
+    "Kitchen": "Ricky",
+    "Laundry":  "Jacob",
+    "Floor" : "Chloe"
+  },
+
+  {
+    "Kitchen": "Chloe",
+    "Laundry":  "Ricky",
+    "Floor" : "Jacob"
+  }
+]

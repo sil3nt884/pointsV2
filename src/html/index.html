@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Points</title>
+    <script src="javascript/jquery-3.4.1.min.js"></script>
+    <script src="javascript/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body class="bg-dark">
+    <div class="container-md ">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="index.html">Points</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="rota.html">Rota</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="push.html">Push</a>
+            </li>
+        </ul>
+    <div class="card" style="width: 90%;  margin: auto;  top:100px ; padding: 10%;">
+        <div class="card-body">
+            <h1>Points System<span class="badge badge-secondary"></span></h1>
+            <div class="row-sm-2">
+                <P>Jacob</P> <p id="jacob">0</p>
+                <P>Leo</P>    <p id="leo">0</p>
+            </div>
+        </div>
+
+        <form id="form" class="form-inline border border-primary" >
+            <div class="form-group col-md-2">
+                <label>Jacob </label>
+                <button onclick="post(this.id);"id="jacobadd" class="btn btn-primary">add</button>
+                <button onclick="post(this.id);"id="jacobtakeaway" class="btn btn-primary">takeaway</button>
+            </div>
+            <div class="form-group col-md-2">
+                <label>Leo </label>
+                <button onclick="post(this.id);" id="leoadd" class="btn btn-primary">add</button>
+                <button onclick="post(this.id);"id="leotakeaway" class="btn btn-primary">takeaway</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+    $("#form").submit(function(e) {
+        e.preventDefault();
+    });
+
+    $.get(`https://${new URL(window.location.href).host}/data`, function (data) {
+        document.getElementById('jacob').innerText = data.jacob
+        document.getElementById('leo').innerText = data.leo
+    })
+
+    function post(id) {
+        console.log(`https://${new URL(window.location.href).host}/${id}`)
+        $.post( `https://${new URL(window.location.href).host}/${id}`, function( data ) {
+            if(id === 'jacobadd'){
+                document.getElementById('jacob').innerText = data
+            }
+            if(id === 'leoadd'){
+                document.getElementById('leo').innerText = data
+            }
+
+            if(id === 'jacobtakeaway'){
+                document.getElementById('jacob').innerText = data
+            }
+            if(id === 'leotakeaway'){
+                document.getElementById('leo').innerText = data
+            }
+        });
+    }
+
+
+</script>
+
+</body>
+</html>
