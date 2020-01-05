@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Points</title>
+    <script src="javascript/jquery-3.4.1.min.js"></script>
+    <script src="javascript/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <script src="javascript/push.js"></script>
+</head>
+<body class="bg-dark">
+<div class="container-md ">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="index.html">Points</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="rota.html">Rota</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="push.html">Push</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="stars.html">Stars</a>
+        </li>
+    </ul>
+    <div class="card" style="width: 90%;  margin: auto;  top:100px ; padding: 10%;">
+     <p style="font-size: 100px "> Leo's Stars</p>
+        <div id="stars">
+         <div id="starlist"></div>
+        </div>
+        <br>
+        <button onclick="addStar();" id="addStar" class="btn btn-primary">Add Star</button>
+        <br>
+        <button onclick="takeawayStar();" id="takeAwayStar" class="btn btn-primary">Take Away Star</button>
+    </div>
+    <script>
+
+        function createStarOutlines() {
+            let starList = document.getElementById('starlist')
+            let images = []
+            for(let i= 0; i < 10; i++){
+                let image = document.createElement('img')
+                image.src = 'staroutline.jpg'
+                image.width=100
+                image.height=100
+                images.push(document.createElement('li').appendChild(image))
+            }
+            starList.appendChild(images[0]).id = '0'
+            starList.appendChild(images[1]).id = '1'
+            starList.appendChild(images[2]).id = '2'
+            starList.appendChild(images[3]).id = '3'
+            starList.appendChild(images[4]).id = '4'
+            starList.appendChild(images[5]).id = '5'
+            starList.appendChild(images[6]).id = '6'
+            starList.appendChild(images[7]).id = '7'
+            starList.appendChild(images[8]).id = '8'
+            starList.appendChild(images[9]).id = '9'
+        }
+
+        createStarOutlines()
+
+    </script>
+</div>
+
+<script>
+    $("#form").submit(function(e) {
+        e.preventDefault();
+    });
+
+
+    loadStars ()
+
+    function  loadStars () {
+        $.get('/stars', (currentStars) =>{
+            console.log('current starts '+currentStars)
+            for(let i= 0; i<currentStars; i++){
+                document.getElementById(i+'').src = 'star.jpg'
+            }
+
+        })
+
+    }
+
+    function addStar  () {
+        let audio =  new Audio('Sparkle-sound-effect.mp3')
+        audio.play()
+
+        $.get('/addStar', (currentStars) =>{
+               let startOverride = document.getElementById(currentStars)
+               startOverride.src = 'star.jpg'
+               setTimeout(()=>{
+                   location.reload()
+               }, 4403)
+               if(currentStars === '0'){
+                    for(let i= 0; i<10; i++){
+                        document.getElementById(i+'').src = 'staroutline.jpg'
+                    }
+               }
+        })
+    }
+
+    function takeawayStar  () {
+        let audio =  new Audio('Takeaway.mp3')
+        audio.play()
+        $.get('/takeawayStar', (currentStars) =>{
+            let startOverride = document.getElementById(currentStars)
+            startOverride.src = 'staroutline.jpg'
+            setTimeout(()=>{
+                location.reload()
+            }, 1000)
+
+        })
+    }
+
+
+
+
+</script>
+
+</body>
+</html>

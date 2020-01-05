@@ -116,7 +116,25 @@ let createRota = async () => {
 
 }
 
-let init = [initializeRecord(),createRota()]
+
+let starsInit = () =>{
+    return new Promise(async resolve =>  {
+        let exisit = await findExisiting( {})
+        let keys = Object.values(exisit).map(e => Object.keys(e))
+        let starsExisit = keys.filter(k => k.includes('collectedstarts')).length > 0
+        if(starsExisit){
+            resolve()
+        }
+        else if(starsExisit === false) {
+            let c = await collection()
+            await c.insertOne({collectedstarts: 0})
+            resolve()
+        }
+    })
+}
+
+
+let init = [initializeRecord(),createRota(), starsInit()]
 
 Promise.all(init).catch(err =>{
     console.log(err)

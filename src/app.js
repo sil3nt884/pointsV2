@@ -10,6 +10,9 @@ let add = require('./routes/add')
 let rotaGet = require('./routes/rota')
 let sub = require('./routes/sub.js')
 let push  = require('./routes/push')
+let addStar = require('./routes/addStar')
+let loadStars = require('./routes/loadStars')
+let takeawayStars = require('./routes/takeawayStars')
 
 const  app = express();
 
@@ -19,6 +22,9 @@ app.use('\/[a-z]+takeaway',add)
 app.use('/rota', rotaGet)
 app.use('/subscription', sub)
 app.use('/push', push)
+app.use('/addStar', addStar)
+app.use('/stars', loadStars)
+app.use('/takeawayStar',takeawayStars)
 
 app.use(logger('dev'));
 app.use(express.json());
