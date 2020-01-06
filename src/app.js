@@ -13,6 +13,7 @@ let push  = require('./routes/push')
 let addStar = require('./routes/addStar')
 let loadStars = require('./routes/loadStars')
 let takeawayStars = require('./routes/takeawayStars')
+let menu  = require('./routes/menu')
 
 const  app = express();
 
@@ -25,6 +26,8 @@ app.use('/push', push)
 app.use('/addStar', addStar)
 app.use('/stars', loadStars)
 app.use('/takeawayStar',takeawayStars)
+app.use('/menu', menu)
+app.use('/savemenu', menu)
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Points</title>
+    <script src="javascript/jquery-3.4.1.min.js"></script>
+    <script src="javascript/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <script src="javascript/push.js"></script>
+</head>
+<body class="bg-dark">
+<div class="container-md ">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="index.html">Points</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="rota.html">Rota</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="push.html">Push</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="stars.html">Stars</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="Dinner.html.html">Dinner</a>
+        </li>
+    </ul>
+    <div class="card" style="width: 90%;  margin: auto;  top:100px ; padding: 10%;">
+            <div id="menu">
+                <p style="font-weight: bold">Current Menu</p>
+
+
+            </div>
+
+
+            <div>
+                <p style="font-weight: bold">Recent added items</p>
+                <ul id="itemList"></ul>
+
+            </div>
+            <form id="form">
+                <div class="form-group">
+                    <label>Add Dinner Item:</label>
+                    <input id="item" class="form-control" type="text" />
+                    <button onclick="preAdd();"id="addItem" class="btn btn-primary">Add item</button>
+                    <button onclick="saveItems();" id="save" class="btn btn-primary">save</button>
+                </div>
+            </form>
+
+
+    </div>
+</div>
+
+<script>
+    $("#form").submit(function(e) {
+        e.preventDefault();
+
+    });
+
+    function loadMenu() {
+        let list = document.createElement('ul')
+        let menuMain = document.getElementById('menu')
+
+        $.get('/menu', (data)=>{
+                let menu = JSON.parse(data)
+                menu.items.forEach(item => {
+                    let itemNode = document.createElement('li')
+                    itemNode.append(document.createTextNode(item))
+                    list.appendChild(itemNode)
+                } )
+            menuMain.appendChild(list)
+        })
+
+    }
+
+    loadMenu()
+
+    let items = []
+    let itemsList = document.getElementById('itemList')
+
+    function add(index){
+       itemsList.appendChild(items[index])
+    }
+
+    function preAdd () {
+        let inputText = document.getElementById('item').value
+        if(inputText) {
+            let li = document.createElement('li')
+            let item = document.createElement('button')
+            li.appendChild(item)
+            item.innerText = inputText
+            item.onclick = removeItem
+            item.class = 'item'
+            items.push(li)
+            add(items.length - 1)
+        }
+    }
+
+
+    function removeItem (data){
+        let src = data.target.parentNode
+        itemsList.removeChild(src)
+    }
+
+    function saveItems() {
+        let buttons = Array.from($('button'))
+        let stuff  = buttons.filter(e => e.class === 'item').map(e => e.innerText)
+        let menuItems = {}
+        stuff.forEach((item, i) => {
+            menuItems[item+'_'+i] = item
+        })
+
+        $.ajax({
+            type: "POST",
+            url: '/savemenu',
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            data: JSON.stringify(menuItems),
+            success: console.log('sent'),
+            dataType: 'json'
+        })
+
+
+    }
+
+
+</script>
+
+</body>
+</html>
