@@ -7,8 +7,8 @@ let getCurrentWeek = () =>{
     return fs.readFileSync('currentWeek.txt', 'utf8')
 }
 
-let updateWeek = (currentWeek, bool) => {
-    fs.writeFileSync('currentWeek.txt', currentWeek+','+bool+'')
+let updateWeek = (currentWeek) => {
+    fs.writeFileSync('currentWeek.txt', currentWeek)
 }
 let rota  = async (req,res) =>{
     let data = await find({})
@@ -22,15 +22,20 @@ let rota  = async (req,res) =>{
     keysFlattened.forEach(key => {
         dataObj = data.filter(e => e[key])
     })
-    let currentWeek = parseInt(getCurrentWeek().split(',')[0])
+    let currentWeek = parseInt(getCurrentWeek())
     let currentDay = new Date().toDateString().substring(0,3)
-    let updated = getCurrentWeek().split(',')[1]
-    if(currentDay === 'Mon' && updated === 'false'){
-         updateWeek(currentWeek, true)
+
+    if((currentDay === 'Mon') && (new Date().getHours() === 0)){
+        if(currentWeek < 3) {
+            currentWeek = currentWeek + 1
+            updateWeek(currentWeek)
+        }
+        else {
+            currentWeek = 0
+            updateWeek(currentWeek)
+        }
     }
-    else if(currentDay === 'Tue'){
-        updateWeek(currentWeek, false)
-    }
+
 
     res.send(dataObj[currentWeek])
 

@@ -14,6 +14,7 @@ let addStar = require('./routes/addStar')
 let loadStars = require('./routes/loadStars')
 let takeawayStars = require('./routes/takeawayStars')
 let menu  = require('./routes/menu')
+let jobs = require('./jobs')
 
 const  app = express();
 
@@ -37,6 +38,7 @@ app.use(express.static(path.join(__dirname, 'html')));
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
+jobs();
 
 
 module.exports = app;
