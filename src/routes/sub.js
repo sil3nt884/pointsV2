@@ -11,7 +11,9 @@ let sub = (req, res) =>{
     })
     req.on('close', ()=>{
         console.log('close')
-        push.handlePushNotificationSubscription({body, res})
+	if(body !== ''){
+       		 push.handlePushNotificationSubscription({body, res})
+	}
     })
     res.send('ok')
 }

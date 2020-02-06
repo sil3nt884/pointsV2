@@ -25,7 +25,7 @@ let rota  = async (req,res) =>{
     let currentWeek = parseInt(getCurrentWeek())
     let currentDay = new Date().toDateString().substring(0,3)
 
-    if((currentDay === 'Mon') && (new Date().getHours() === 0)){
+    if(new Date().getDay() === 1 && new Date().getHours() === 0){
         if(currentWeek < 3) {
             currentWeek = currentWeek + 1
             updateWeek(currentWeek)
