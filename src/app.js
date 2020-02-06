@@ -30,7 +30,15 @@ app.use('/takeawayStar',takeawayStars)
 app.use('/menu', menu)
 app.use('/savemenu', menu)
 
-app.use(logger('dev'));
+app.use(logger((tokens, req, res)=>{
+	return JSON.stringify( {
+	  method : tokens.method(req, res),
+		url : tokens.url(req, res),
+	  ip : req.connection.remoteAddress,
+		headers : req.headers,
+	  status: tokens.status(req, res),
+ }, null, 1)
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
