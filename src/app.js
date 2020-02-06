@@ -34,7 +34,7 @@ app.use(logger((tokens, req, res)=>{
 	return JSON.stringify( {
 	  method : tokens.method(req, res),
 		url : tokens.url(req, res),
-		qs : req.url,
+		qs : req.query,
 	  ip : req.connection.remoteAddress,
 		headers : req.headers,
 	  status: tokens.status(req, res),
