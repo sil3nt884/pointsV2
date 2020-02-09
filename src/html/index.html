@@ -33,6 +33,7 @@
             <h1>Points System<span class="badge badge-secondary"></span></h1>
             <div class="row-sm-2">
                 <P>Jacob</P> <p id="jacob">0</p>
+                <p>Jacob Pocket Money <p id="money">0</p></p>
                 <P>Leo</P>    <p id="leo">0</p>
             </div>
         </div>
@@ -42,6 +43,7 @@
                 <label>Jacob </label>
                 <button onclick="post(this.id);"id="jacobadd" class="btn btn-primary">add</button>
                 <button onclick="post(this.id);"id="jacobtakeaway" class="btn btn-primary">takeaway</button>
+                <button onclick="exchangePoints()" id="exchange" class="btn btn-primary">exchange</button>
             </div>
             <div class="form-group col-md-2">
                 <label>Leo </label>
@@ -61,8 +63,14 @@
     $.get(`https://${new URL(window.location.href).host}/data`, function (data) {
         document.getElementById('jacob').innerText = data.jacob
         document.getElementById('leo').innerText = data.leo
+        document.getElementById('money').innerText =  data.money
     })
 
+    function exchangePoints ()  {
+			$.post( `https://${new URL(window.location.href).host}/exchange`, function( data ) {
+                        document.getElementById('money').innerText = data
+            })
+    }
     function post(id) {
         console.log(`https://${new URL(window.location.href).host}/${id}`)
         $.post( `https://${new URL(window.location.href).host}/${id}`, function( data ) {

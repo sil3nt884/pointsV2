@@ -15,6 +15,7 @@ let loadStars = require('./routes/loadStars')
 let takeawayStars = require('./routes/takeawayStars')
 let menu  = require('./routes/menu')
 let jobs = require('./jobs')
+let exchange = require('./routes/exchange')
 
 const  app = express();
 
@@ -29,6 +30,7 @@ app.use('/stars', loadStars)
 app.use('/takeawayStar',takeawayStars)
 app.use('/menu', menu)
 app.use('/savemenu', menu)
+app.use('/exchange', exchange)
 
 app.use(logger((tokens, req, res)=>{
 	return JSON.stringify( {

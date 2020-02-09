@@ -9,6 +9,7 @@ const connections = []
 let connectToDB = () => {
     return new Promise(resolve => {
         MongoClient.connect(url, function (err, client) {
+            console.log(err)
             if (err !== null) ;
             e.emit('connection added', client)
             resolve(client.db(dbName))

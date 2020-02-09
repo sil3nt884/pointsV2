@@ -5,7 +5,6 @@ const find  = config.find
 
 let addJacob = async (res, data) => {
     let currentJacobPoints = data[0].jacob
-    console.log(typeof currentJacobPoints)
     let currentLeo = data[0].leo
     if (currentJacobPoints < 101) {
         let currentObj = {leo: currentLeo, jacob: currentJacobPoints}
