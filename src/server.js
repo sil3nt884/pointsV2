@@ -1,15 +1,12 @@
 const app = require('./app')
-const https = require('https')
+const https = require('http')
 const http = require('http')
 const fs = require('fs')
 const config = require ('./config')
 
-const options = {
-    key: fs.readFileSync(config.keyPath),
-    cert: fs.readFileSync(config.fullChain)
-};
 
-const server = https.createServer(options,app)
+
+const server = https.createServer(app)
 app.set('port', config.port)
 
 server.listen(config.port)
