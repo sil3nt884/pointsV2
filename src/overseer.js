@@ -1,6 +1,7 @@
 const fs = require('fs')
 const https = require('tls')
 const net = require('net')
+const http = require('http')
 
 
 const options = {
@@ -24,8 +25,10 @@ https.createServer(options, (socket => {
 			 			host: '127.0.0.1',
 						 port: 3000
 		 });
+		 socket.on('error', handleError)
 		 socket.pipe(to)
 		 to.pipe(socket)
+		 to.on('error', handleError)
 	 }
 	 else{
 	 	console.log('sending away bad person')
@@ -35,3 +38,9 @@ https.createServer(options, (socket => {
 })).listen(443, (data)=>{
 		console.log(data)
 })
+
+
+const handleError =  (error) =>{
+
+	console.log(error)
+}
