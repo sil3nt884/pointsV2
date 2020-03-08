@@ -17,7 +17,7 @@ module.exports=  () => {
       await push.sendPushNotification({ title:'Oyster card return now', text:'Return Rickys Oyster', tag:'Oyster'})
    });
 
-   let j2 = scheduler.scheduledJobs({hour: 0, minute: 0, dayOfWeek: 0 }, ()=> {
+   let j2 = scheduler.scheduleJob({hour: 0, minute: 0, dayOfWeek: 1 }, ()=> {
       let currentWeek = parseInt(getCurrentWeek())
       if(currentWeek <= 2) {
          currentWeek = currentWeek + 1

@@ -1,12 +1,10 @@
 const app = require('./app')
-const https = require('http')
 const http = require('http')
-const fs = require('fs')
 const config = require ('./config')
 
 
 
-const server = https.createServer(app)
+const server = http.createServer(app)
 app.set('port', config.port)
 
 server.listen(config.port)
@@ -22,6 +20,6 @@ http.createServer((req, res)=>{
         {Location: `https:///${host}`}
     );
     res.end()
-}).listen(80 )
+}).listen(80)
 
 
